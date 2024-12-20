@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  op-database:
+    container_name: op-database
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    image: hwnaginkyu42/op-database
+    environment:
+      - MARIADB_DATABASE=op
+      - MARIADB_ROOT_PASSWORD=ajoumc1234
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
+    restart: always
