@@ -28,4 +28,3 @@ export default defineConfig({
     outDir: "../src/main/resources/static",
   },
 })
-// const {d

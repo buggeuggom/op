@@ -1,7 +1,7 @@
 <template>
   <div class="add-work-container">
     <el-form :model="form" label-width="100px" @submit.native.prevent="handleAddWork">
-      <el-form-item label="업무 내용" :rules="[{ required: true, message: '업무 내용을 작성하시오', trigger: 'blur' }]">
+      <el-form-item label="업무 내용" type="textarea" :rules="[{ required: true, message: '업무 내용을 작성하시오', trigger: 'blur' }]">
         <el-input v-model="form.memo" placeholder="업무 내용을 작성하시오"></el-input>
       </el-form-item>
 
@@ -49,7 +49,9 @@ export default {
 
 <style scoped>
 .add-work-container {
-  max-width: 400px;
+  margin-top: auto;
+  width: 70%;
+  font-size: medium;
   margin: 50px auto;
   padding: 20px;
   border: 1px solid #ccc;

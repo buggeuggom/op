@@ -6,10 +6,10 @@ import AddWorkPage from "@/pages/AddWorkPage.vue";
 
 
 const routes = [
-  {path: '/login', name: 'Login', component: LoginPage},
-  {path: '/signup',name: 'Signup', component: SignupPage},
-  {path: '/', component: HomePage},
-  {path: '/add-work', component: AddWorkPage},
+  {path: '/login', name: 'login', component: LoginPage},
+  {path: '/signup', name: 'signup', component: SignupPage},
+  {path: '/',  name: 'home', component: HomePage},
+  {path: '/add-work', name: 'addWork', component: AddWorkPage},
   // 기타 라우트 설정
 ];
 
@@ -21,8 +21,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
-  if (!token && to.name !== 'Login' && to.name !== 'Signup') {
-    next({name: 'Login'});
+  if (!token && to.name !== 'login' && to.name !== 'signup') {
+    next({name: 'login'});
   } else {
     next();
   }

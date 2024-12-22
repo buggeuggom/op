@@ -14,9 +14,28 @@ services:
     ports:
       - "3306:3306"
     restart: always
-  front:
+
+
+  op-back:
+    container_name: op-back
+    build: .
+    depends_on:
+      - op-database
+    image: hwnaginkyu42/op-back
+    ports:
+      - "8800:8080"
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
+    restart: always
+
+  op-front:
+    container_name: op-front
     build:
       context: ./front
       dockerfile: Dockerfile
+    depends_on:
+      - op-back
+    image: hwnaginkyu42/op-front
     ports:
       - "80:80"
+    restart: always

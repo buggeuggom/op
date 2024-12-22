@@ -1,8 +1,10 @@
 <template>
   <Header/>
   <div>
-
-    <el-button type="primary" @click="goToAddWork" style="margin-bottom: 20px">Add Work</el-button>
+    <!-- Add Work 버튼을 오른쪽으로 정렬 -->
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+      <el-button type="primary" @click="goToAddWork">Add Work</el-button>
+    </div>
 
     <el-table :data="paginatedWorks" style="width: 100%">
       <el-table-column prop="createdAt" label="작성시간"></el-table-column>
@@ -73,12 +75,4 @@ export default {
 </script>
 
 <style scoped>
-.add-work-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
 </style>

@@ -4,6 +4,7 @@ package com.ajou.op.service;
 import com.ajou.op.domain.user.User;
 import com.ajou.op.dto.security.UserDetailsImpl;
 import com.ajou.op.dto.UserDto;
+import com.ajou.op.exception.OpApplicationException;
 import com.ajou.op.repositoty.UserRepository;
 import com.ajou.op.request.UserSignupRequest;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static com.ajou.op.exception.ErrorCode.*;
 
 
 @Service
@@ -24,7 +27,7 @@ public class UserService implements UserDetailsService {
     public UserDto signup(UserSignupRequest request) {
 
         userRepository.findByEmail(request.getEmail()).ifPresent(it -> {
-            throw new RuntimeException("Email already in use");
+            throw new OpApplicationException(DUPLICATED_EMAIL);
         });
 
         User user = User.builder()
@@ -40,7 +43,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User userData = userRepository.findByEmail(email)
-                .orElseThrow(()->new RuntimeException("User not found"));
+                .orElseThrow(()->new OpApplicationException(USER_NOT_FOUND));
 
         return new UserDetailsImpl(userData);
 

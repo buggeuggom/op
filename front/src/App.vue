@@ -15,4 +15,7 @@ export default {
 </script>
 
 <style>
+/* 전체 글자 크기를 2배로 설정 */
+* {
+}
 </style>
