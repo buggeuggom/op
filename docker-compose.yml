@@ -27,15 +27,3 @@ services:
     volumes:
       - ./database/config:/etc/mysql/conf.d
     restart: always
-
-  op-front:
-    container_name: op-front
-    build:
-      context: ./front
-      dockerfile: Dockerfile
-    depends_on:
-      - op-back
-    image: hwnaginkyu42/op-front
-    ports:
-      - "80:80"
-    restart: always
