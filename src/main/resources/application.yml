@@ -11,11 +11,12 @@ spring:
   config:
     activate:
       on-profile: common
-
 jwt:
   token:
     expired-time-ms: 612000000
     secret-key: ajoumc-wjdqhcjwlxla-dhvlvkdlf-ghkddlsrbaksema
+server:
+  port: 80
 ---
 spring:
   config:
