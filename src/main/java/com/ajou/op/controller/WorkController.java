@@ -26,8 +26,6 @@ public class WorkController {
 
     @PostMapping()
     public void post(@RequestBody WorkRequest request, Authentication authentication){
-
-
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
         workService.save(request, user);
     }

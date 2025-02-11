@@ -3,7 +3,7 @@ package com.ajou.op.service;
 import com.ajou.op.domain.MonitoringAbnormality;
 import com.ajou.op.domain.user.User;
 import com.ajou.op.dto.MonitoringAbnormalityDto;
-import com.ajou.op.repositoty.MonitoringAbnormalityRepository;
+import com.ajou.op.repositoty.monitoringAbnormality.MonitoringAbnormalityRepository;
 import com.ajou.op.request.MonitoringAbnormalityRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

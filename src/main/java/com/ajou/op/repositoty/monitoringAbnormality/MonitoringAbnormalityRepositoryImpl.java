@@ -1,9 +1,6 @@
-package com.ajou.op.repositoty;
+package com.ajou.op.repositoty.monitoringAbnormality;
 
 import com.ajou.op.domain.MonitoringAbnormality;
-import com.ajou.op.domain.QMonitoringAbnormality;
-import com.ajou.op.domain.user.QUser;
-import com.ajou.op.dto.MonitoringAbnormalityDto;
 import com.ajou.op.response.PagingResponse;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

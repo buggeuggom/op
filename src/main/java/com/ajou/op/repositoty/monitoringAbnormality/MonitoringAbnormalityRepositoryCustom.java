@@ -1,4 +1,4 @@
-package com.ajou.op.repositoty;
+package com.ajou.op.repositoty.monitoringAbnormality;
 
 
 import com.ajou.op.domain.MonitoringAbnormality;
