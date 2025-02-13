@@ -1,0 +1,30 @@
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.user-search {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.user-select {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 250px;
+  background-color: white;
+}
+
+.no-user-selected {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  color: #666;
+  font-size: 1.1rem;
+} 

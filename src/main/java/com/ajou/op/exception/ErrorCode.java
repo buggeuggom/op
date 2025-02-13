@@ -17,6 +17,10 @@ public enum ErrorCode {
 
     //404
     USER_NOT_FOUND(NOT_FOUND, "User not founded"),
+    MONTHLY_GOAL_NOT_FOUND(NOT_FOUND, "Monthly Goal not founded"),
+    PROJECT_NOT_FOUND(NOT_FOUND, "Monthly Goal not founded"),
+    ROUTINE_JOB_NOT_FOUND(NOT_FOUND, "Routine Job not founded"),
+    DAILY_WORK_NOT_FOUND(NOT_FOUND, "Daily Work not founded"),
 
 
     //409

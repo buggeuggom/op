@@ -24,6 +24,7 @@
 
 .form-section {
   margin-bottom: 1.5rem;
+  position: relative;
 }
 
 .form-section h2 {
@@ -66,7 +67,10 @@
   flex: 1;
 }
 
-.add-button {
+.form-section .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
   color: white;
   background-color: #4a90e2;
   border: none;
@@ -74,7 +78,6 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
-  align-self: flex-end;
   transition: background-color 0.2s;
 }
 

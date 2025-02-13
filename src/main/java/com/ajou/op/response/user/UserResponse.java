@@ -1,4 +1,4 @@
-package com.ajou.op.response.dailywork;
+package com.ajou.op.response.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class DailyWorkResponse {
+public class UserResponse {
 
-    private Long id;
-    private String work;
-
+    private String email;
+    private String name;
 }

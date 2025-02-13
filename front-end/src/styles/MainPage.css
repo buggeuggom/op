@@ -1,36 +1,37 @@
-/* 레이아웃 */
+/* 기본 레이아웃 */
 .main-container {
-  padding-top: 80px; /* Navbar 높이만큼 여백 추가 */
+  padding-top: 80px;
   min-height: 100vh;
   background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-/* 테이블 헤더 영역 */
-.table-header {
+/* 상단 헤더 영역 */
+.table-header, .admin-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  padding-right: 12px; /* 테이블 td의 padding과 동일하게 설정 */
+  margin-bottom: 1.5rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 /* 주차 선택 영역 */
 .week-selector {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin-left: 12px; /* 테이블 td의 padding과 동일하게 설정 */
 }
 
 .week-nav-button {
@@ -40,7 +41,6 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
   transition: background-color 0.2s;
 }
 
@@ -49,39 +49,28 @@
 }
 
 .current-week {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #333;
   padding: 0.5rem 1rem;
-  background-color: #f8f9fa;
+  background: none;
   border: none;
-  border-radius: 4px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.current-week:hover {
-  background-color: #e9ecef;
 }
 
 /* 추가하기 버튼 */
 .add-button {
-  padding: 0.5rem 1.2rem;
-  background-color: #28a745;
+  padding: 0.5rem 1rem;
+  background-color: #4a90e2;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
+  transition: background-color 0.2s;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: background-color 0.2s;
 }
 
 .add-button:hover {
-  background-color: #218838;
+  background-color: #357abd;
 }
 
 /* 메인 테이블 */
@@ -89,37 +78,37 @@
   width: 100%;
   border-collapse: collapse;
   background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  overflow-x: auto; /* 가로 스크롤 추가 */
+  table-layout: fixed;
+  height: 100%;
 }
 
 .daily-table th,
 .daily-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
   text-align: center;
-  min-width: 200px;
-  vertical-align: middle;
+  font-size: 0.85rem;
 }
 
 .daily-table th {
   background-color: #f8f9fa;
   font-weight: 600;
   color: #333;
-}
-
-.daily-table tr:nth-child(even) {
-  background-color: #f8f9fa;
+  height: 40px;
+  font-size: 0.9rem;
 }
 
 .category-cell {
   font-weight: 600;
-  background-color: #eef2f7;
-  width: 120px;
-  position: sticky;
-  left: 0;
-  z-index: 1;
-  text-align: center;
+  background-color: #f8f9fa;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
 }
 
 /* 리스트 스타일 */
@@ -127,69 +116,91 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  text-align: center;
 }
 
 .daily-list li {
-  padding: 4px 0;
-  color: #555;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.daily-list li:last-child {
+  border-bottom: none;
+}
+
+/* DatePicker 스타일 */
+.react-datepicker-wrapper {
+  width: auto;
+}
+
+.date-picker {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+/* 리스트 스타일 */
+.daily-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  word-break: break-all;
+}
+
+.daily-list li {
+  padding: 0.6rem 0;
+  color: #4a5568;
   text-align: center;
+  font-size: 0.95rem;
+  overflow-wrap: break-word;
 }
 
 .daily-list li:not(:last-child) {
-  border-bottom: 1px solid #eee;
-}
-
-.empty-message {
-  color: #999;
-  font-style: italic;
-  padding: 8px 0;
-  text-align: center;
+  border-bottom: 1px solid #edf2f7;
 }
 
 /* DatePicker 커스터마이징 */
-.date-picker {
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
 .react-datepicker {
   font-family: inherit;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  overflow: hidden;
 }
 
 .react-datepicker__header {
   background-color: #4a90e2;
-  border-bottom: none;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  padding-top: 8px;
+  border: none;
+  padding: 1rem;
 }
 
 .react-datepicker__current-month {
   color: white;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .react-datepicker__day-name {
-  color: white;
+  color: rgba(255,255,255,0.9);
+  font-weight: 500;
 }
 
 .react-datepicker__day--selected {
   background-color: #4a90e2;
-  border-radius: 50%;
+  border-radius: 8px;
 }
 
 .react-datepicker__day:hover {
-  border-radius: 50%;
+  border-radius: 8px;
+  background-color: #e2e8f0;
 }
 
 .welcome-text {
-  font-size: 2rem;
-  color: #333;
+  font-size: 2.2rem;
+  color: #2d3748;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  font-weight: 600;
 } 

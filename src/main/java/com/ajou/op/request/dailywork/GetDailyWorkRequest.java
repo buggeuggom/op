@@ -14,4 +14,5 @@ import java.time.LocalDate;
 public class GetDailyWorkRequest {
 
     private LocalDate day;
+    private String email;
 }

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 public class ProjectResponse {
-
+    private Long id;
     private String goals;
 
 }

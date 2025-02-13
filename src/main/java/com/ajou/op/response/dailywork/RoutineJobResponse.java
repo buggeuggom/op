@@ -10,5 +10,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @AllArgsConstructor(access = PRIVATE)
 public class RoutineJobResponse {
+
+    private Long id;
     private String goals;
 }

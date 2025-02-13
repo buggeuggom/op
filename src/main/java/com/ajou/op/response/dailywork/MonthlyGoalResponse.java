@@ -9,6 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MonthlyGoalResponse {
 
-
+    private Long id;
     private String goals;
 }

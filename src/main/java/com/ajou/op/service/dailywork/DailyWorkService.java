@@ -2,18 +2,16 @@ package com.ajou.op.service.dailywork;
 
 
 import com.ajou.op.domain.dailywork.DailyWork;
-import com.ajou.op.domain.dailywork.MonthlyGoal;
-import com.ajou.op.domain.dailywork.Project;
-import com.ajou.op.domain.dailywork.RoutineJob;
 import com.ajou.op.domain.user.User;
+import com.ajou.op.domain.user.UserRole;
+import com.ajou.op.exception.ErrorCode;
+import com.ajou.op.exception.OpApplicationException;
+import com.ajou.op.repositoty.UserRepository;
 import com.ajou.op.repositoty.dailywork.DailyWorkRepository;
 import com.ajou.op.repositoty.dailywork.MonthlyGoalRepository;
 import com.ajou.op.repositoty.dailywork.ProjectRepository;
 import com.ajou.op.repositoty.dailywork.RoutineJobRepository;
 import com.ajou.op.request.dailywork.DailyWorkRequest;
-import com.ajou.op.request.dailywork.MonthlyGoalRequest;
-import com.ajou.op.request.dailywork.ProjectRequest;
-import com.ajou.op.request.dailywork.RoutineJobRequest;
 import com.ajou.op.response.dailywork.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,9 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.ajou.op.exception.ErrorCode.INVALID_PERMISSION;
+import static com.ajou.op.exception.ErrorCode.USER_NOT_FOUND;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -35,22 +36,33 @@ public class DailyWorkService {
     private final MonthlyGoalRepository monthlyGoalRepository;
     private final RoutineJobRepository routineJobRepository;
     private final DailyWorkRepository dailyWorkRepository;
+    private final UserRepository userRepository;
+
 
 
     @Transactional(readOnly = true)
+    public List<DailyWorkFromResponse> getDailyWorkFormAdmin(LocalDate day, String email, User user) {
+        User writer = userRepository.findByEmail(email).orElseThrow(() -> new OpApplicationException(USER_NOT_FOUND));
+        if(!user.getRole().equals(UserRole.ADMIN)){
+            throw new OpApplicationException(INVALID_PERMISSION);
+        }
+
+        return getDailyWorkForm(day, writer);
+    }
+
+    @Transactional(readOnly = true)
     public List<DailyWorkFromResponse> getDailyWorkForm(LocalDate request, User user) {
-
-        List<MonthlyGoalResponse> monthlyGoals = monthlyGoalRepository.findByUserAndWorkDay(user, getFirstDayOfMonth(request)).stream()
-                .map(req -> MonthlyGoalResponse.builder()
-                        .goals(req.getGoals())
-                        .build())
-                .toList();
-
 
         List<DailyWorkFromResponse> collected = Stream.iterate(0, i -> i + 1)
                 .limit(6)
                 .map(i -> {
                     LocalDate targetDate = request.plusDays(i);
+
+                    List<MonthlyGoalResponse> monthlyGoals = monthlyGoalRepository.findByUserAndWorkDay(user, getFirstDayOfMonth(targetDate)).stream()
+                            .map(req -> MonthlyGoalResponse.builder()
+                                    .goals(req.getGoals())
+                                    .build())
+                            .toList();
 
                     // Projects 조회 (시작일과 종료일 사이에 targetDate가 있는 것들)
                     List<ProjectResponse> projects = projectRepository.findByUserAndStartedAtLessThanEqualAndEndedAtGreaterThanEqual(
@@ -95,42 +107,6 @@ public class DailyWorkService {
         return collected;
     }
 
-    public void saveMonthlyGoals(List<MonthlyGoalRequest> requests, User user) {
-        List<MonthlyGoal> monthlyGoals = requests.stream().map((request) -> MonthlyGoal
-                        .builder()
-                        .user(user)
-                        .goals(request.getGoals())
-                        .workDay(getFirstDayOfMonth(request.getWorkDay()))
-                        .build())
-                .toList();
-
-        monthlyGoalRepository.saveAll(monthlyGoals);
-    }
-
-    public void saveRoutineJobs(List<RoutineJobRequest> requests, User user) {
-        List<RoutineJob> routinJobs = requests.stream().map((req) -> RoutineJob.builder()
-                        .user(user)
-                        .goals(req.getGoals())
-                        .startedAt(req.getStartedAt())
-                        .endedAt(req.getEndedAt())
-                        .build())
-                .toList();
-
-        routineJobRepository.saveAll(routinJobs);
-    }
-
-    public void saveProjects(List<ProjectRequest> requests, User user) {
-        List<Project> projects = requests.stream().map((req) -> Project.builder()
-                        .user(user)
-                        .goals(req.getGoals())
-                        .startedAt(req.getStartedAt())
-                        .endedAt(req.getEndedAt())
-                        .build())
-                .toList();
-
-        projectRepository.saveAll(projects);
-    }
-
     public void saveDailyWorks(List<DailyWorkRequest> requests, User user) {
 
         List<DailyWork> dailyWorks = requests.stream().map((req) -> DailyWork.builder()
@@ -143,6 +119,18 @@ public class DailyWorkService {
         dailyWorkRepository.saveAll(dailyWorks);
     }
 
+    public void deleteDailyWork(Long id, User user) {
+
+        DailyWork entity = dailyWorkRepository.findById(id).orElseThrow(
+                () -> new OpApplicationException(ErrorCode.MONTHLY_GOAL_NOT_FOUND)
+        );
+
+        if(!entity.getUser().equals(user)){
+            throw new OpApplicationException(INVALID_PERMISSION);
+        }
+
+        dailyWorkRepository.delete(entity);
+    }
 
     private LocalDate getFirstDayOfMonth(LocalDate localDate) {
         return localDate.withDayOfMonth(1);

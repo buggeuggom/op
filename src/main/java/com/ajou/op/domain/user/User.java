@@ -22,6 +22,7 @@ public class User  extends AuditingFields {
     private String email;
     private String name;
     private String password;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
 

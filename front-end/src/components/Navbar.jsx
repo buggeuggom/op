@@ -13,19 +13,26 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="navbar-brand">
-        Daily Work
-      </Link>
-      <div className="navbar-user">
-        <span className="user-name">
-          안녕하세요, {auth?.name}님!
-        </span>
-        <button 
-          onClick={handleLogout}
-          className="logout-button"
-        >
-          로그아웃
-        </button>
+      <div className="navbar-content">
+        <div className="navbar-left">
+          <Link to="/" className="navbar-brand">
+            Daily Work
+          </Link>
+          <Link to="/admin" className="nav-link">
+            관리자
+          </Link>
+        </div>
+        <div className="navbar-user">
+          <span className="user-name">
+            안녕하세요, {auth?.name}님!
+          </span>
+          <button 
+            onClick={handleLogout}
+            className="logout-button"
+          >
+            로그아웃
+          </button>
+        </div>
       </div>
     </nav>
   );
