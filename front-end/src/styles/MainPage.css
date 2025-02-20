@@ -203,4 +203,107 @@
   text-align: center;
   margin-bottom: 2.5rem;
   font-weight: 600;
+}
+
+.daily-work-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.daily-work-add {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.daily-work-add input {
+  flex: 1;
+  padding: 0.3rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  min-width: 0;
+}
+
+.add-buttons {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.action-button {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.daily-list li:hover .action-button {
+  opacity: 1;
+}
+
+.add-button-small {
+  padding: 0.2rem 0.5rem;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  opacity: 1;
+}
+
+.add-button-small:hover {
+  background-color: #27ae60;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+
+.daily-work-item.new-work {
+  border-bottom: 2px solid #eee;
+  padding: 0.5rem 0;
+}
+
+.filled-cell {
+  color: #333;
+}
+
+.empty-cell {
+  color: #999;
+}
+
+.filled-cell:hover, .empty-cell:hover {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.daily-work-edit {
+  width: 100%;
+}
+
+.daily-work-edit input {
+  width: 100%;
+  padding: 0.3rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.daily-work-edit input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 } 

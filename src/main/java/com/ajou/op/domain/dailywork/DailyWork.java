@@ -41,4 +41,8 @@ public class DailyWork extends AuditingFields {
         this.work = work;
         this.workDay = workDay;
     }
+
+    public void changeWork(String work) {
+        this.work = work;
+    }
 }

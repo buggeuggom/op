@@ -3,6 +3,7 @@ package com.ajou.op.domain.user;
 import com.ajou.op.domain.AuditingFields;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,10 +14,12 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor(access = PROTECTED)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User  extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @EqualsAndHashCode.Include
     private Integer id;
     @Column(unique = true)
     private String email;

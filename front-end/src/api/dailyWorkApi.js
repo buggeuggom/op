@@ -40,4 +40,18 @@ export const getDailyWorks = async (day) => {
     headers: getAuthHeader()
   });
   return response.data;
+};
+
+// 데일리워크 수정
+export const updateDailyWork = async (id, dailyWork) => {
+  await apiClient.put(`/daily-works/daily-works/${id}`, dailyWork, {
+    headers: getAuthHeader()
+  });
+};
+
+// 데일리워크 삭제
+export const deleteDailyWork = async (id) => {
+  await apiClient.delete(`/daily-works/daily-works/${id}`, {
+    headers: getAuthHeader()
+  });
 }; 

@@ -19,7 +19,7 @@ function AdminPage() {
   const navigate = useNavigate();
 
   const getThisWeekDates = (baseDate) => {
-    const koreaDate = new Date(baseDate.getTime() + (9 * 60 * 60 * 1000));
+    const koreaDate = new Date(baseDate.getTime());
     const currentDay = koreaDate.getDay();
     
     const monday = new Date(koreaDate);

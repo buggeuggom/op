@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/locale'; 
 import Navbar from '../components/Navbar';
 import AddWorkModal from '../components/AddWorkModal';
-import { getDailyWorks } from '../api/dailyWorkApi';
+import { getDailyWorks, createDailyWorks, updateDailyWork, deleteDailyWork } from '../api/dailyWorkApi';
 import '../styles/MainPage.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,10 +14,12 @@ function MainPage() {
   const [weekDates, setWeekDates] = useState([]);
   const [selectedWeekStart, setSelectedWeekStart] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingCell, setEditingCell] = useState(null);
+  const [editValue, setEditValue] = useState('');
   const navigate = useNavigate();
 
   const getThisWeekDates = (baseDate) => {
-    const koreaDate = new Date(baseDate.getTime() + (9 * 60 * 60 * 1000));
+    const koreaDate = new Date(baseDate.getTime());
     const currentDay = koreaDate.getDay();
     
     const monday = new Date(koreaDate);
@@ -39,7 +41,6 @@ function MainPage() {
     try {
       setLoading(true);
       const data = await getDailyWorks(dates[0].date);
-      console.log(data);
       setDailyData(data);
     } catch (err) {
       console.error('Error fetching daily works:', err);
@@ -60,7 +61,6 @@ function MainPage() {
     setSelectedWeekStart(newDate);
   };
 
-  // 카테고리별로 다른 기본 줄 수를 생성하는 헬퍼 함수
   const createEmptyRows = (existingData = [], rowCount = 5) => {
     const emptyRows = Array(rowCount).fill({ goals: '-', work: '-' });
     return emptyRows.map((empty, index) => 
@@ -70,6 +70,49 @@ function MainPage() {
 
   const handleDateChange = (date) => {
     setSelectedWeekStart(date);
+  };
+
+  const handleStartEdit = (index, date, existingWork) => {
+    if (existingWork.id) {
+      setEditingCell({ index, date });
+      setEditValue(existingWork.work || '');
+    } else if (!existingWork.work || existingWork.work === '-') {
+      setEditingCell({ index, date });
+      setEditValue('');
+    }
+  };
+
+  const handleSaveEdit = async (index, date, workId) => {
+    const trimmedValue = editValue.trim();
+
+    try {
+      if (workId) {
+        if (!trimmedValue) {
+          await deleteDailyWork(workId);
+        } else {
+          await updateDailyWork(workId, {
+            work: trimmedValue,
+            workDay: date
+          });
+        }
+      } else if (trimmedValue) {
+        await createDailyWorks([{
+          work: trimmedValue,
+          workDay: date
+        }]);
+      }
+
+      setEditingCell(null);
+      setEditValue('');
+      const dates = getThisWeekDates(selectedWeekStart);
+      await fetchDailyWorks(dates);
+    } catch (error) {
+      const action = workId 
+        ? (!trimmedValue ? '삭제' : '수정')
+        : '추가';
+      console.error(`Daily Work ${action} 실패:`, error);
+      alert(`${action}에 실패했습니다.`);
+    }
   };
 
   return (
@@ -164,8 +207,36 @@ function MainPage() {
                 {weekDates.map((dateInfo, idx) => (
                   <td key={dateInfo.date}>
                     <ul className="daily-list">
-                      {createEmptyRows(dailyData?.[idx]?.dailyWorks, 10).map((work, index) => (
-                        <li key={index}>{work.work || '-'}</li>
+                      {createEmptyRows(dailyData?.[idx]?.dailyWorks, Math.max(9, dailyData?.[idx]?.dailyWorks?.length || 0) + 2).map((work, index) => (
+                        <li key={index} className="daily-work-item">
+                          {editingCell?.index === index && editingCell?.date === dateInfo.date ? (
+                            <div className="daily-work-edit">
+                              <input
+                                type="text"
+                                value={editValue}
+                                onChange={(e) => setEditValue(e.target.value)}
+                                placeholder="작업 내용 입력 (비우면 삭제)"
+                                autoFocus
+                                onKeyPress={(e) => {
+                                  if (e.key === 'Enter') {
+                                    handleSaveEdit(index, dateInfo.date, work.id);
+                                  }
+                                }}
+                                onBlur={() => handleSaveEdit(index, dateInfo.date, work.id)}
+                              />
+                            </div>
+                          ) : (
+                            <div 
+                              className="daily-work-content"
+                              onClick={() => handleStartEdit(index, dateInfo.date, work)}
+                              style={{ cursor: work.id || (!work.work || work.work === '-') ? 'pointer' : 'default' }}
+                            >
+                              <span className={!work.id && (!work.work || work.work === '-') ? 'empty-cell' : 'filled-cell'}>
+                                {work.work || '-'}
+                              </span>
+                            </div>
+                          )}
+                        </li>
                       ))}
                     </ul>
                   </td>

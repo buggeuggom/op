@@ -38,6 +38,13 @@ public class DailyWorkController {
         dailyworkService.saveDailyWorks(requests, user);
     }
 
+    @PutMapping("/daily-works/{id}")
+    public void updateDailyWork(@PathVariable Long id, @RequestBody DailyWorkRequest request, Authentication authentication) {
+        User user = ClassUtils.getSafeUserBySafeCast(authentication);
+
+        dailyworkService.updateDailyWork(id, request, user);
+    }
+
 
     @DeleteMapping("/daily-works/{id}")
     public void deleteDailyWork(@PathVariable Long id, Authentication authentication) {

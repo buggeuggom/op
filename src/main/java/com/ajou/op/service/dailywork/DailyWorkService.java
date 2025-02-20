@@ -60,6 +60,7 @@ public class DailyWorkService {
 
                     List<MonthlyGoalResponse> monthlyGoals = monthlyGoalRepository.findByUserAndWorkDay(user, getFirstDayOfMonth(targetDate)).stream()
                             .map(req -> MonthlyGoalResponse.builder()
+                                    .id(req.getId())
                                     .goals(req.getGoals())
                                     .build())
                             .toList();
@@ -70,6 +71,7 @@ public class DailyWorkService {
                                     targetDate,
                                     targetDate
                             ).stream().map(en -> ProjectResponse.builder()
+                                    .id(en.getId())
                                     .goals(en.getGoals())
                                     .build())
                             .toList();
@@ -80,6 +82,7 @@ public class DailyWorkService {
                                     targetDate,
                                     targetDate
                             ).stream().map(en -> RoutineJobResponse.builder()
+                                    .id(en.getId())
                                     .goals(en.getGoals())
                                     .build())
                             .toList();
@@ -89,6 +92,7 @@ public class DailyWorkService {
                                     user,
                                     targetDate)
                             .stream().map(en -> DailyWorkResponse.builder()
+                                    .id(en.getId())
                                     .work(en.getWork())
                                     .build())
                             .toList();
@@ -130,6 +134,20 @@ public class DailyWorkService {
         }
 
         dailyWorkRepository.delete(entity);
+    }
+
+
+    public void updateDailyWork(Long id, DailyWorkRequest request, User user) {
+
+        DailyWork entity = dailyWorkRepository.findById(id).orElseThrow(
+                () -> new OpApplicationException(ErrorCode.MONTHLY_GOAL_NOT_FOUND)
+        );
+
+        if(!entity.getUser().equals(user)){
+            throw new OpApplicationException(INVALID_PERMISSION);
+        }
+
+        entity.changeWork(request.getWork());
     }
 
     private LocalDate getFirstDayOfMonth(LocalDate localDate) {
