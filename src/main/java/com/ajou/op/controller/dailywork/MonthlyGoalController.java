@@ -1,6 +1,7 @@
 package com.ajou.op.controller.dailywork;
 
 import com.ajou.op.domain.user.User;
+import com.ajou.op.request.dailywork.montlyGoals.ChangeMonthlyGoalRequest;
 import com.ajou.op.request.dailywork.montlyGoals.CreateMonthlyGoalRequest;
 import com.ajou.op.service.dailywork.MonthlyGoalService;
 import com.ajou.op.utils.ClassUtils;
@@ -25,8 +26,15 @@ public class MonthlyGoalController {
     }
 
 
+    @PutMapping("/{id}")
+    public void updateMonthlyGoal(@PathVariable Long id, @RequestBody ChangeMonthlyGoalRequest requests, Authentication authentication) {
+        User user = ClassUtils.getSafeUserBySafeCast(authentication);
+
+        monthlyGoalService.updateMonthlyGoals(id, requests, user);
+    }
+
     @DeleteMapping("/{id}")
-    public void deleteMonthlyGoals(@PathVariable Long id,Authentication authentication) {
+    public void deleteMonthlyGoals(@PathVariable Long id, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
         monthlyGoalService.deletesMonthlyGoal(id, user);

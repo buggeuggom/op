@@ -1,0 +1,80 @@
+.daily-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.daily-table th,
+.daily-table td {
+  padding: 1rem;
+  border: 1px solid #e9ecef;
+}
+
+.daily-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.category-cell {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.daily-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.daily-list li {
+  padding: 0.5rem;
+  border-bottom: 1px solid #e9ecef;
+  transition: background-color 0.2s;
+}
+
+.daily-list li:last-child {
+  border-bottom: none;
+}
+
+.daily-list li:hover {
+  background-color: #f8f9fa;
+}
+
+/* 각 항목별 스타일 */
+.monthly-goal-item,
+.project-item,
+.routine-job-item,
+.daily-work-item {
+  position: relative;
+}
+
+/* 편집 모드 스타일 */
+.edit-mode input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #4a90e2;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* 반응형 처리 */
+@media (max-width: 1024px) {
+  .daily-table {
+    font-size: 0.9rem;
+  }
+
+  .daily-table th,
+  .daily-table td {
+    padding: 0.8rem;
+  }
+} 

@@ -5,6 +5,7 @@ import com.ajou.op.domain.user.User;
 import com.ajou.op.exception.ErrorCode;
 import com.ajou.op.exception.OpApplicationException;
 import com.ajou.op.repositoty.dailywork.MonthlyGoalRepository;
+import com.ajou.op.request.dailywork.montlyGoals.ChangeMonthlyGoalRequest;
 import com.ajou.op.request.dailywork.montlyGoals.CreateMonthlyGoalRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,17 @@ public class MonthlyGoalService {
                 .toList();
 
         monthlyGoalRepository.saveAll(monthlyGoals);
+    }
+
+    public void updateMonthlyGoals(Long id, ChangeMonthlyGoalRequest requests, User user) {
+        MonthlyGoal entity = monthlyGoalRepository.findById(id)
+                .orElseThrow(() -> new OpApplicationException(ErrorCode.MONTHLY_GOAL_NOT_FOUND));
+
+        if(!entity.getUser().equals(user)){
+            throw new OpApplicationException(INVALID_PERMISSION);
+        }
+
+        entity.changeGoals(requests.getGoals());
     }
 
     /**

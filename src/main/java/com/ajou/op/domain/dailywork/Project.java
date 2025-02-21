@@ -10,7 +10,6 @@ import org.hibernate.annotations.Comment;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -47,4 +46,10 @@ public class Project  extends AuditingFields {
         this.endedAt = endedAt;
         this.goals = goals;
     }
+
+
+    public void changeGoals(String goals) {
+        this.goals = goals;
+    }
+
 }

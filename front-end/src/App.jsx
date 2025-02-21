@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
 import MainPage from './pages/MainPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
@@ -18,7 +19,10 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <MainPage />
+              <>
+                <Navbar />
+                <MainPage />
+              </>
             </ProtectedRoute>
           }
         />
@@ -26,7 +30,10 @@ function App() {
           path="/admin"
           element={
             <ProtectedRoute>
-              <AdminPage />
+              <>
+                <Navbar />
+                <AdminPage />
+              </>
             </ProtectedRoute>
           }
         />
@@ -34,7 +41,10 @@ function App() {
           path="/daily-work/new"
           element={
             <ProtectedRoute>
-              <AddWorkPage />
+              <>
+                <Navbar />
+                <AddWorkPage />
+              </>
             </ProtectedRoute>
           }
         />

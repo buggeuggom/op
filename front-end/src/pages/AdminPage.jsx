@@ -95,7 +95,6 @@ function AdminPage() {
 
   return (
     <>
-      <Navbar />
       <div className="main-container">
         <div className="content">
           <div className="admin-header">

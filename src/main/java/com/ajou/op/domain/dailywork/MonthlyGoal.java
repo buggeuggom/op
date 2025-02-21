@@ -37,4 +37,8 @@ public class MonthlyGoal  extends AuditingFields {
         this.workDay = workDay;
         this.goals = goals;
     }
+
+    public void changeGoals(String goals) {
+        this.goals = goals;
+    }
 }

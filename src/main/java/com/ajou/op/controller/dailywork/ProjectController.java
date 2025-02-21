@@ -24,6 +24,13 @@ public class ProjectController {
         projectService.saveProjects(requests, user);
     }
 
+    @PutMapping("/{id}")
+    public void updateProject(@PathVariable Long id, @RequestBody ProjectRequest request, Authentication authentication) {
+        User user = ClassUtils.getSafeUserBySafeCast(authentication);
+
+        projectService.updateProject(id, request, user);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteMonthlyGoals(@PathVariable Long id,Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);

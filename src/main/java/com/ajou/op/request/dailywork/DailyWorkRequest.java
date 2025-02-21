@@ -10,13 +10,11 @@ import java.time.LocalDate;
 @Setter
 public class DailyWorkRequest {
 
-    private Long id;
     private String work;
     private LocalDate workDay;
 
     @Builder
-    public DailyWorkRequest(Long id, String work, LocalDate workDay) {
-        this.id = id;
+    public DailyWorkRequest(String work, LocalDate workDay) {
         this.work = work;
         this.workDay = workDay;
     }

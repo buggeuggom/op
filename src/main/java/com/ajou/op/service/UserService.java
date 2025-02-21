@@ -55,7 +55,7 @@ public class UserService implements UserDetailsService {
 
     public List<UserResponse> findAllByUserRole() {
 
-        return userRepository.findAllByRole(UserRole.WORKER).stream()
+        return userRepository.findAllByRoleOrderByName(UserRole.WORKER).stream()
                 .map(en -> UserResponse.builder()
                         .email(en.getEmail())
                         .name(en.getName())

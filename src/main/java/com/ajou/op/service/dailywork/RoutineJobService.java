@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.ajou.op.exception.ErrorCode.*;
 import static com.ajou.op.exception.ErrorCode.INVALID_PERMISSION;
 
 @Service
@@ -34,9 +35,20 @@ public class RoutineJobService {
         routineJobRepository.saveAll(routinJobs);
     }
 
+    public  void updateRoutineJobs(Long id,  RoutineJobRequest request, User user) {
+        var entity = routineJobRepository.findById(id)
+                .orElseThrow(() -> new OpApplicationException(ROUTINE_JOB_NOT_FOUND));
+
+        if (!entity.getUser().equals(user)) {
+            throw new OpApplicationException(INVALID_PERMISSION);
+        }
+
+        entity.changeGoals(request.getGoals());
+    }
+
     public void deleteRoutineJob(Long id, User user) {
-        RoutineJob entity = routineJobRepository.findById(id)
-                .orElseThrow(() -> new OpApplicationException(ErrorCode.ROUTINE_JOB_NOT_FOUND));
+        var entity = routineJobRepository.findById(id)
+                .orElseThrow(() -> new OpApplicationException(ROUTINE_JOB_NOT_FOUND));
 
         if (!entity.getUser().equals(user)) {
             throw new OpApplicationException(INVALID_PERMISSION);

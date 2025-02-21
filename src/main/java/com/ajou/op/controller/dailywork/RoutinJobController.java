@@ -25,6 +25,13 @@ public class RoutinJobController {
     }
 
 
+    @PutMapping("/{id}")
+    public void updateRoutineJob(@PathVariable Long id, @RequestBody RoutineJobRequest request, Authentication authentication) {
+        User user = ClassUtils.getSafeUserBySafeCast(authentication);
+
+        routineJobService.updateRoutineJobs(id, request, user);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteRoutineJob(@PathVariable Long id, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);

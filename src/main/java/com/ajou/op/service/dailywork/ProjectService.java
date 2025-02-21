@@ -35,6 +35,18 @@ public class ProjectService {
     }
 
 
+    public void updateProject(Long id, ProjectRequest request, User user) {
+        Project entity = projectRepository.findById(id)
+                .orElseThrow(() -> new OpApplicationException(INVALID_PERMISSION));
+
+        if(!entity.getUser().equals(user)) {
+            throw new OpApplicationException(INVALID_PERMISSION);
+        }
+
+        entity.changeGoals(request.getGoals());
+    }
+
+
     public  void deleteProject(Long id, User user) {
         Project entity = projectRepository.findById(id)
                 .orElseThrow(() -> new OpApplicationException(INVALID_PERMISSION));

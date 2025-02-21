@@ -76,7 +76,7 @@ public class DailyWorkService {
                                     .build())
                             .toList();
 
-                    // RoutineJobs 조회 (시작일과 종료일 사이에 targetDate가 있는 것들)
+                    // RoutineJobs 조회 (시작일과 종료일 사이에 targetDate 가 있는 것들)
                     List<RoutineJobResponse> routineJobs = routineJobRepository.findByUserAndStartedAtLessThanEqualAndEndedAtGreaterThanEqual(
                                     user,
                                     targetDate,
