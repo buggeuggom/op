@@ -8,13 +8,13 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class CreateMonthlyGoalRequest {
+public class MonthlyGoalCreateRequest {
 
     private LocalDate workDay;
     private String goals;
 
     @Builder
-    public CreateMonthlyGoalRequest(LocalDate workDay, String goals) {
+    public MonthlyGoalCreateRequest(LocalDate workDay, String goals) {
         this.workDay = workDay;
         this.goals = goals;
     }

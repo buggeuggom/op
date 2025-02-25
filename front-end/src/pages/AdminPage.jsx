@@ -19,12 +19,16 @@ function AdminPage() {
   const navigate = useNavigate();
 
   const getThisWeekDates = (baseDate) => {
-    const koreaDate = new Date(baseDate.getTime());
-    const currentDay = koreaDate.getDay();
+    // baseDate를 한국 시간(UTC+9) 기준으로 변환
+    const koreaDate = new Date(baseDate.getTime() + 9 * 60 * 60 * 1000);
+    koreaDate.setUTCHours(0, 0, 0, 0); // 시간을 00:00:00.000으로 설정
     
+    const currentDay = koreaDate.getUTCDay(); // UTC 기준 요일 (일요일: 0, 월요일: 1, ..., 토요일: 6)
+
+    // 월요일을 기준으로 주 시작일 계산 (일요일이면 월요일로 보정)
     const monday = new Date(koreaDate);
-    monday.setDate(koreaDate.getDate() - (currentDay === 0 ? 6 : currentDay - 1));
-    
+    monday.setUTCDate(koreaDate.getUTCDate() - (currentDay === 0 ? 6 : currentDay - 1));
+
     const dates = [];
     for (let i = 0; i < 6; i++) {
       const date = new Date(monday);

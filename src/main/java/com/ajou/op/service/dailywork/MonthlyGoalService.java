@@ -5,8 +5,8 @@ import com.ajou.op.domain.user.User;
 import com.ajou.op.exception.ErrorCode;
 import com.ajou.op.exception.OpApplicationException;
 import com.ajou.op.repositoty.dailywork.MonthlyGoalRepository;
-import com.ajou.op.request.dailywork.montlyGoals.ChangeMonthlyGoalRequest;
-import com.ajou.op.request.dailywork.montlyGoals.CreateMonthlyGoalRequest;
+import com.ajou.op.request.dailywork.montlyGoals.MonthlyGoalChangeRequest;
+import com.ajou.op.request.dailywork.montlyGoals.MonthlyGoalCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ public class MonthlyGoalService {
     /**
      Creates
      */
-    public void saveMonthlyGoals(List<CreateMonthlyGoalRequest> requests, User user) {
+    public void saveMonthlyGoals(List<MonthlyGoalCreateRequest> requests, User user) {
         List<MonthlyGoal> monthlyGoals = requests.stream().map((request) -> MonthlyGoal
                         .builder()
                         .user(user)
@@ -38,7 +38,7 @@ public class MonthlyGoalService {
         monthlyGoalRepository.saveAll(monthlyGoals);
     }
 
-    public void updateMonthlyGoals(Long id, ChangeMonthlyGoalRequest requests, User user) {
+    public void updateMonthlyGoals(Long id, MonthlyGoalChangeRequest requests, User user) {
         MonthlyGoal entity = monthlyGoalRepository.findById(id)
                 .orElseThrow(() -> new OpApplicationException(ErrorCode.MONTHLY_GOAL_NOT_FOUND));
 

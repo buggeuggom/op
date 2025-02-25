@@ -1,8 +1,8 @@
 package com.ajou.op.controller.dailywork;
 
 import com.ajou.op.domain.user.User;
-import com.ajou.op.request.dailywork.montlyGoals.ChangeMonthlyGoalRequest;
-import com.ajou.op.request.dailywork.montlyGoals.CreateMonthlyGoalRequest;
+import com.ajou.op.request.dailywork.montlyGoals.MonthlyGoalChangeRequest;
+import com.ajou.op.request.dailywork.montlyGoals.MonthlyGoalCreateRequest;
 import com.ajou.op.service.dailywork.MonthlyGoalService;
 import com.ajou.op.utils.ClassUtils;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class MonthlyGoalController {
     private final MonthlyGoalService monthlyGoalService;
 
     @PostMapping()
-    public void saveMonthlyGoals(@RequestBody List<CreateMonthlyGoalRequest> requests, Authentication authentication) {
+    public void saveMonthlyGoals(@RequestBody List<MonthlyGoalCreateRequest> requests, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
         monthlyGoalService.saveMonthlyGoals(requests, user);
@@ -27,7 +27,7 @@ public class MonthlyGoalController {
 
 
     @PutMapping("/{id}")
-    public void updateMonthlyGoal(@PathVariable Long id, @RequestBody ChangeMonthlyGoalRequest requests, Authentication authentication) {
+    public void updateMonthlyGoal(@PathVariable Long id, @RequestBody MonthlyGoalChangeRequest requests, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
         monthlyGoalService.updateMonthlyGoals(id, requests, user);

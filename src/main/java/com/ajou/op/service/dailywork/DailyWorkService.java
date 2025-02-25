@@ -11,7 +11,7 @@ import com.ajou.op.repositoty.dailywork.DailyWorkRepository;
 import com.ajou.op.repositoty.dailywork.MonthlyGoalRepository;
 import com.ajou.op.repositoty.dailywork.ProjectRepository;
 import com.ajou.op.repositoty.dailywork.RoutineJobRepository;
-import com.ajou.op.request.dailywork.DailyWorkRequest;
+import com.ajou.op.request.dailywork.DailyWorkCreateRequest;
 import com.ajou.op.response.dailywork.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -111,7 +111,7 @@ public class DailyWorkService {
         return collected;
     }
 
-    public void saveDailyWorks(List<DailyWorkRequest> requests, User user) {
+    public void saveDailyWorks(List<DailyWorkCreateRequest> requests, User user) {
 
         List<DailyWork> dailyWorks = requests.stream().map((req) -> DailyWork.builder()
                         .work(req.getWork())
@@ -137,7 +137,7 @@ public class DailyWorkService {
     }
 
 
-    public void updateDailyWork(Long id, DailyWorkRequest request, User user) {
+    public void updateDailyWork(Long id, DailyWorkCreateRequest request, User user) {
 
         DailyWork entity = dailyWorkRepository.findById(id).orElseThrow(
                 () -> new OpApplicationException(ErrorCode.MONTHLY_GOAL_NOT_FOUND)

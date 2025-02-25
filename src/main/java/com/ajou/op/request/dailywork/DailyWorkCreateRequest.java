@@ -8,13 +8,13 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class DailyWorkRequest {
+public class DailyWorkCreateRequest {
 
     private String work;
     private LocalDate workDay;
 
     @Builder
-    public DailyWorkRequest(String work, LocalDate workDay) {
+    public DailyWorkCreateRequest(String work, LocalDate workDay) {
         this.work = work;
         this.workDay = workDay;
     }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 @AllArgsConstructor
-public class GetDailyWorkRequest {
+public class DailyWorkGetRequest {
 
     private LocalDate day;
     private String email;

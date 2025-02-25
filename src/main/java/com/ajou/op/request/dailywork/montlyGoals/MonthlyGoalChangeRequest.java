@@ -4,16 +4,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
-public class ChangeMonthlyGoalRequest {
+public class MonthlyGoalChangeRequest {
 
     private String goals;
 
     @Builder
-    public ChangeMonthlyGoalRequest(String goals) {
+    public MonthlyGoalChangeRequest(String goals) {
         this.goals = goals;
     }
 }

@@ -19,27 +19,27 @@ public class DailyWorkController {
     private final DailyWorkService dailyworkService;
 
     @GetMapping()
-    public List<DailyWorkFromResponse> getDailyWorkForm(@ModelAttribute GetDailyWorkRequest request, Authentication authentication) {
+    public List<DailyWorkFromResponse> getDailyWorkForm(@ModelAttribute DailyWorkGetRequest request, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
         return dailyworkService.getDailyWorkForm(request.getDay(), user);
     }
 
     @GetMapping("/admin")
-    public List<DailyWorkFromResponse> getDailyWorkFormAdmin(@ModelAttribute GetDailyWorkRequest request, Authentication authentication) {
+    public List<DailyWorkFromResponse> getDailyWorkFormAdmin(@ModelAttribute DailyWorkGetRequest request, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
         return dailyworkService.getDailyWorkFormAdmin(request.getDay(), request.getEmail(), user);
     }
     @PostMapping("/daily-works")
-    public void saveDailyWork(@RequestBody List<DailyWorkRequest> requests, Authentication authentication) {
+    public void saveDailyWork(@RequestBody List<DailyWorkCreateRequest> requests, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
         dailyworkService.saveDailyWorks(requests, user);
     }
 
     @PutMapping("/daily-works/{id}")
-    public void updateDailyWork(@PathVariable Long id, @RequestBody DailyWorkRequest request, Authentication authentication) {
+    public void updateDailyWork(@PathVariable Long id, @RequestBody DailyWorkCreateRequest request, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
         dailyworkService.updateDailyWork(id, request, user);
