@@ -7,21 +7,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserSignupRequest {
+public class UserChangePasswordRequest {
 
     private String email;
     private String name;
+    
     private String password;
-    private UserRole role;
-    private String partName;
 
 
     @Builder
-    public UserSignupRequest(String email, String name, String password, UserRole role, String partName) {
+    public UserChangePasswordRequest(String email, String name, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
-        this.role = role;
-        this.partName = partName;
     }
 }

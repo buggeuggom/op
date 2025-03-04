@@ -15,12 +15,8 @@ export const login = async (email, password) => {
   return saveToLocalStorage(response.data.token, response.data.name);
 };
 
-export const signup = async (email, password, name) => {
-  const response = await apiClient.post('/users/signup', {
-    email,
-    password,
-    name
-  });
+export const signup = async (signupData) => {
+  const response = await apiClient.post('/users/signup', signupData);
   return response.data;
 };
 

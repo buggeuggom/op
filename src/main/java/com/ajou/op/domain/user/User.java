@@ -1,6 +1,7 @@
 package com.ajou.op.domain.user;
 
 import com.ajou.op.domain.AuditingFields;
+import com.ajou.op.domain.Part;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -21,19 +22,35 @@ public class User  extends AuditingFields {
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include
     private Integer id;
+
     @Column(unique = true)
     private String email;
+
     private String name;
+
     private String password;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Part part;
+
+
+    public void changeRole(UserRole role) {
+        this.role = role;
+    }
+
+    public void changePassword(String password) {
+        this.password = password;
+    }
 
     @Builder
-    private User(String email, String name, String password, UserRole role) {
+    public User(String email, String name, String password, UserRole role, Part part) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.role = role;
+        this.part = part;
     }
 }

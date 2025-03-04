@@ -13,7 +13,7 @@ spring:
       on-profile: common
 jwt:
   token:
-    expired-time-ms: 612000000
+    expired-time-ms: 61200000000
     secret-key: ajoumc-wjdqhcjwlxla-dhvlvkdlf-ghkddlsrbaksema
 server:
   port: 80

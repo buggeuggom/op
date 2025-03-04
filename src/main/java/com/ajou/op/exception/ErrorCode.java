@@ -21,10 +21,11 @@ public enum ErrorCode {
     PROJECT_NOT_FOUND(NOT_FOUND, "Monthly Goal not founded"),
     ROUTINE_JOB_NOT_FOUND(NOT_FOUND, "Routine Job not founded"),
     DAILY_WORK_NOT_FOUND(NOT_FOUND, "Daily Work not founded"),
-
+    PART_NOT_FOUND(NOT_FOUND, "Part not founded"),
 
     //409
-   DUPLICATED_EMAIL(CONFLICT, "Duplicated email"),
+   DUPLICATED_EMAIL(CONFLICT, "Duplicated Email"),
+   DUPLICATED_PART(CONFLICT, "Duplicated Part"),
 
     //500
     SERVERERROR(INTERNAL_SERVER_ERROR, "Internal Server Error"),
