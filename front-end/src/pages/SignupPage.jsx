@@ -133,7 +133,7 @@ function SignupPage() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="partName">부서</label>
+            <label htmlFor="partName">파트</label>
             <select
               id="partName"
               name="partName"
@@ -141,7 +141,7 @@ function SignupPage() {
               onChange={handleChange}
               required
             >
-              <option value="">부서 선택</option>
+              <option value="">파트 선택</option>
               {parts.map(part => (
                 <option key={part.id} value={part.name}>
                   {part.name}
