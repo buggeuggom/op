@@ -43,7 +43,7 @@ public class DailyWorkService {
     @Transactional(readOnly = true)
     public List<DailyWorkFromResponse> getDailyWorkFormAdmin(LocalDate day, String email, User user) {
         User writer = userRepository.findByEmail(email).orElseThrow(() -> new OpApplicationException(USER_NOT_FOUND));
-        if(!user.getRole().equals(UserRole.ADMIN)){
+        if(!(user.getRole().equals(UserRole.ADMIN)||user.getRole().equals(UserRole.LEADER))) {
             throw new OpApplicationException(INVALID_PERMISSION);
         }
 

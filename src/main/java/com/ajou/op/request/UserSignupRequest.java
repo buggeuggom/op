@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import static com.ajou.op.domain.user.UserRole.*;
+
 @Getter
 @Setter
 public class UserSignupRequest {
@@ -21,7 +23,7 @@ public class UserSignupRequest {
         this.email = email;
         this.name = name;
         this.password = password;
-        this.role = role;
+        this.role = WORKER;
         this.partName = partName;
     }
 }

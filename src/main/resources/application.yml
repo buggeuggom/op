@@ -16,7 +16,7 @@ jwt:
     expired-time-ms: 61200000000
     secret-key: ajoumc-wjdqhcjwlxla-dhvlvkdlf-ghkddlsrbaksema
 server:
-  port: 80
+  port: 8080
 ---
 spring:
   config:
