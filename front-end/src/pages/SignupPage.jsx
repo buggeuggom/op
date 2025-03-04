@@ -37,7 +37,7 @@ function SignupPage() {
     switch (name) {
       case 'email':
         if (value.length < 4) {
-          return '이메일은 4글자 이상이어야 합니다.';
+          return '아이디는 4글자 이상이어야 합니다.';
         }
         break;
       case 'password':
@@ -96,7 +96,7 @@ function SignupPage() {
         <h1 className="auth-title">회원가입</h1>
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="email">이메일</label>
+            <label htmlFor="email">아이디</label>
             <input
               type="text"
               id="email"

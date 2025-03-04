@@ -25,7 +25,7 @@ function LoginPage() {
         <h1 className="auth-title">로그인</h1>
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="email">이메일</label>
+            <label htmlFor="email">아이디</label>
             <input
               type="text"
               id="email"

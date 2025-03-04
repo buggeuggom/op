@@ -9,7 +9,6 @@ function LoginComponent() {
     e.preventDefault();
     try {
       await login(email, password);
-      // 로그인 성공 시 입력 필드 초기화
       setEmail('');
       setPassword('');
     } catch (error) {
@@ -21,9 +20,9 @@ function LoginComponent() {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="email">이메일:</label>
+        <label htmlFor="email">아이디:</label>
         <input
-          type="email"
+          type="text"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
