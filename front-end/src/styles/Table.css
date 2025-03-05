@@ -1,5 +1,7 @@
+/* 테이블 기본 설정 */
 .daily-table {
   width: 100%;
+  table-layout: fixed !important; /* 열 너비 고정 */
   border-collapse: separate;
   border-spacing: 0;
   background-color: white;
@@ -7,6 +9,63 @@
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* 카테고리 헤더와 셀 공통 스타일 */
+.category-header,
+.category-cell {
+  width: 60px !important;
+  max-width: 60px !important;
+  min-width: 60px !important;
+  padding: 4px !important;
+  font-size: 0.75rem !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 카테고리 셀 텍스트 줄임 */
+.category-cell {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+/* Monthly Goal을 MG로 줄여서 표시 */
+.category-cell:first-child::after {
+  content: 'MG';
+  display: block;
+}
+.category-cell:first-child span {
+  display: none;
+}
+
+/* Projects를 Proj로 줄여서 표시 */
+.category-cell:nth-child(2)::after {
+  content: 'Proj';
+  display: block;
+}
+.category-cell:nth-child(2) span {
+  display: none;
+}
+
+/* Routine Jobs를 RJ로 줄여서 표시 */
+.category-cell:nth-child(3)::after {
+  content: 'RJ';
+  display: block;
+}
+.category-cell:nth-child(3) span {
+  display: none;
+}
+
+/* Daily Works를 DW로 줄여서 표시 */
+.category-cell:nth-child(4)::after {
+  content: 'DW';
+  display: block;
+}
+.category-cell:nth-child(4) span {
+  display: none;
+}
+
+/*황인규*/
 
 .daily-table th,
 .daily-table td {
@@ -22,24 +81,37 @@
   white-space: nowrap;
 }
 
-.category-cell {
-  background-color: #f8f9fa;
-  font-weight: 600;
-  color: #495057;
-  white-space: nowrap;
-  min-width: 120px;
+/* 첫 번째 열 너비 설정 - 다른 열의 33% */
+.daily-table th:first-child,
+.daily-table td:first-child {
+  width: calc((100% / 6) * 0.33) !important;
+  min-width: calc((100% / 6) * 0.33) !important;
+  max-width: calc((100% / 6) * 0.33) !important;
+}
+
+/* 나머지 열 너비 설정 */
+.daily-table th:not(:first-child),
+.daily-table td:not(:first-child) {
+  width: calc((100% - ((100% / 6) * 0.33)) / 6) !important;
 }
 
 .daily-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .daily-list li {
+  flex: 1;
   padding: 0.5rem;
   border-bottom: 1px solid #e9ecef;
   transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .daily-list li:last-child {
@@ -77,4 +149,65 @@
   .daily-table td {
     padding: 0.8rem;
   }
+}
+
+/* 테이블 행 높이 통일 */
+.daily-table tr {
+  height: 1px; /* 최소 높이 설정 */
+}
+
+.daily-table td {
+  height: 100%;
+  vertical-align: top;
+  padding: 0;
+}
+
+/* Monthly Goal 행 */
+.daily-table tr:nth-child(1) .daily-list {
+  min-height: 100px;
+}
+
+/* Projects 행 */
+.daily-table tr:nth-child(2) .daily-list {
+  min-height: 250px;
+}
+
+/* Routine Jobs 행 */
+.daily-table tr:nth-child(3) .daily-list {
+  min-height: 250px;
+}
+
+/* Daily Works 행 */
+.daily-table tr:nth-child(4) .daily-list {
+  min-height: 500px;
+}
+
+.daily-work-content,
+.monthly-goal-content,
+.project-content,
+.routine-job-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* 빈 셀 스타일 */
+.empty-cell {
+  color: #adb5bd;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 카테고리 셀 스타일 */
+.category-cell {
+  padding: 4px !important;
+  font-size: 0.9rem !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: #f8f9fa;
+  font-weight: 600;
 } 

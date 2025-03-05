@@ -145,6 +145,10 @@ function AdminPage() {
           </div>
           {selectedUser ? (
             <table className="daily-table">
+              <colgroup>
+                <col style={{width: `${(100/6) * 0.33}%`}} /> {/* 첫 번째 열 너비 - 다른 열의 33% */}
+                <col span="6" /> {/* 나머지 6개 열 */}
+              </colgroup>
               <thead>
                 <tr>
                   <th>Category</th>
@@ -174,7 +178,9 @@ function AdminPage() {
                     <td key={dateInfo.date}>
                       <ul className="daily-list">
                         {createEmptyRows(dailyData?.[idx]?.projects, 5).map((project, index) => (
-                          <li key={index}>{project.goals || '-'}</li>
+                          <li key={index}
+                          style={{ height: "max-content"}}>
+                            {project.goals || '-'}</li>
                         ))}
                       </ul>
                     </td>
@@ -186,7 +192,8 @@ function AdminPage() {
                     <td key={dateInfo.date}>
                       <ul className="daily-list">
                         {createEmptyRows(dailyData?.[idx]?.routineJobs, 5).map((job, index) => (
-                          <li key={index}>{job.goals || '-'}</li>
+                          <li key={index}
+                          style={{ height: "max-content"}}>{job.goals || '-'}</li>
                         ))}
                       </ul>
                     </td>
@@ -198,7 +205,7 @@ function AdminPage() {
                     <td key={dateInfo.date}>
                       <ul className="daily-list">
                         {createEmptyRows(dailyData?.[idx]?.dailyWorks, 10).map((work, index) => (
-                          <li key={index}>{work.work || '-'}</li>
+                          <li key={index} style={{ height: "max-content"}}>{work.work || '-'}</li>
                         ))}
                       </ul>
                     </td>

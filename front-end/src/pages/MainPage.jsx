@@ -309,9 +309,13 @@ function MainPage() {
             </button>
           </div>
           <table className="daily-table">
+            <colgroup>
+              <col style={{width: `${(100/6) * 0.33}%`}} />
+              <col span="6" />
+            </colgroup>
             <thead>
               <tr>
-                <th>Category</th>
+                <th className="category-header">Cat.</th>
                 {weekDates.map((dateInfo) => (
                   <th key={dateInfo.date}>
                     {loading ? '로딩 중...' : `${dateInfo.date} (${dateInfo.dayOfWeek})`}
@@ -326,7 +330,8 @@ function MainPage() {
                   <td key={dateInfo.date}>
                     <ul className="daily-list">
                       {createEmptyRows(dailyData?.[idx]?.monthlyGoals, Math.max(1, dailyData?.[idx]?.monthlyGoals?.length || 0) + 1).map((goal, index) => (
-                        <li key={index} className="monthly-goal-item">
+                        <li key={index} className="monthly-goal-item"
+                          style={{ height: "max-content"}}>
                           {editingMonthlyGoal?.index === index && editingMonthlyGoal?.date === dateInfo.date ? (
                             <div className="monthly-goal-edit">
                               <input
@@ -366,7 +371,8 @@ function MainPage() {
                   <td key={dateInfo.date}>
                     <ul className="daily-list">
                       {createEmptyRows(dailyData?.[idx]?.projects, Math.max(4, dailyData?.[idx]?.projects?.length || 0) + 1).map((project, index) => (
-                        <li key={index} className="project-item">
+                        <li key={index} className="project-item"
+                          style={{ height: "max-content"}}>
                           {editingProject?.index === index && editingProject?.date === dateInfo.date ? (
                             <div className="project-edit">
                               <input
@@ -406,7 +412,8 @@ function MainPage() {
                   <td key={dateInfo.date}>
                     <ul className="daily-list">
                       {createEmptyRows(dailyData?.[idx]?.routineJobs, Math.max(4, dailyData?.[idx]?.routineJobs?.length || 0) + 1).map((job, index) => (
-                        <li key={index} className="routine-job-item">
+                        <li key={index} className="routine-job-item"
+                          style={{ height: "max-content"}}>
                           {editingRoutineJob?.index === index && editingRoutineJob?.date === dateInfo.date ? (
                             <div className="routine-job-edit">
                               <input
@@ -446,7 +453,8 @@ function MainPage() {
                   <td key={dateInfo.date}>
                     <ul className="daily-list">
                       {createEmptyRows(dailyData?.[idx]?.dailyWorks, Math.max(9, dailyData?.[idx]?.dailyWorks?.length || 0) + 2).map((work, index) => (
-                        <li key={index} className="daily-work-item">
+                        <li key={index} className="daily-work-item"
+                          style={{ height: "max-content"}}>
                           {editingCell?.index === index && editingCell?.date === dateInfo.date ? (
                               <div className="daily-work-edit">
                                 <input
