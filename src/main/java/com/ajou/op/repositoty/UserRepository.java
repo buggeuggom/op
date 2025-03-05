@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 
 
-    List<User> findAllByRoleOrderByName(UserRole role);
+    List<User> findAllByRoleNotOrderByName(UserRole role);
     List<User> findAllByRoleAndPartOrderByName(UserRole role, Part part);
 
 }

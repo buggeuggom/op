@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService {
 
         if(user.getRole().equals(UserRole.ADMIN)) {
 
-            return userRepository.findAllByRoleOrderByName(UserRole.WORKER).stream()
+            return userRepository.findAllByRoleNotOrderByName(UserRole.OP).stream()
                     .map(en -> UserResponse.builder()
                             .email(en.getEmail())
                             .name(en.getName())
