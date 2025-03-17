@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/daily-works/routine-jobs")
-public class RoutinJobController {
+public class RoutineJobController {
 
     private final RoutineJobService routineJobService;
 

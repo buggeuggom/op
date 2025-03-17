@@ -86,6 +86,7 @@ function AddWorkPage() {
                 onAddItem={addItem}
                 onRemoveItem={removeItem}
               />
+
               <RoutineJobForm 
                 routineJobs={formData.routineJobs}
                 onItemChange={handleItemChange}
@@ -93,6 +94,7 @@ function AddWorkPage() {
                 onRemoveItem={removeItem}
               />
             </div>
+
             <div className="button-group">
               <button type="button" className="cancel-button" onClick={() => navigate('/')}>
                 취소

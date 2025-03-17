@@ -2,7 +2,7 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 
-function WeekSelector({ selectedWeekStart, weekDates, onDateChange, onMoveWeek }) {
+function WeekSelector({ selectedWeekStart, weekDates, onDateChange, onMoveWeek }) {  //TODO: 처음엔 쓰겠다고 만들었으나 까먹고 사용하지 않은 비운의 파일
   return (
     <div className="week-selector">
       <button 

@@ -53,6 +53,15 @@ public class DailyWorkService {
     @Transactional(readOnly = true)
     public List<DailyWorkFromResponse> getDailyWorkForm(LocalDate request, User user) {
 
+        //척날 부터 토요일 까지를 가져온다.
+
+        // MonthlyGoal 첫날의 달이랑 끝날 까지의 데이티의 달 가져오기
+        //Project 시작 종료일
+        //시작일 이후에 시작하는 것 중에 종료일보다 작은것 + 종료일보다 작은 것 중에 시작일보다 큰것
+        //Daily work -> 첫 날 부터 끝날 까지 가져오기
+
+
+
         List<DailyWorkFromResponse> collected = Stream.iterate(0, i -> i + 1)
                 .limit(6)
                 .map(i -> {
@@ -76,14 +85,14 @@ public class DailyWorkService {
                                     .build())
                             .toList();
 
-                    // RoutineJobs 조회 (시작일과 종료일 사이에 targetDate 가 있는 것들)
-                    List<RoutineJobResponse> routineJobs = routineJobRepository.findByUserAndStartedAtLessThanEqualAndEndedAtGreaterThanEqual(
-                                    user,
-                                    targetDate,
-                                    targetDate
-                            ).stream().map(en -> RoutineJobResponse.builder()
+
+                    // RoutineJobs 조회 - 시작일/종료일과 요일 조건을 모두 만족하는 것들만 필터링
+                    List<RoutineJobResponse> routineJobs = routineJobRepository.findByUserAndStartedAtLessThanEqualAndEndedAtGreaterThanEqual(user, targetDate, targetDate).stream()
+                            .filter(routineJob -> routineJob.isWorkingDay(targetDate)) // 해당 요일에 해당하는 루틴만 필터링
+                            .map(en -> RoutineJobResponse.builder()
                                     .id(en.getId())
                                     .goals(en.getGoals())
+                                    .workingDays(en.getWorkingDays()) // 요일 정보도 함께 전달
                                     .build())
                             .toList();
 

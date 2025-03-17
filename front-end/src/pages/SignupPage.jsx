@@ -69,7 +69,6 @@ function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 모든 필드 유효성 검사
     const emailError = validateField('email', formData.email);
     const passwordError = validateField('password', formData.password);
 

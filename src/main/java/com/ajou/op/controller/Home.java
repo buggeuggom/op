@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class Home {
+public class Home { //TODO: next 이전후 삭제요망
 
     @GetMapping("/")
     public String HomeController() {

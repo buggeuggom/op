@@ -11,7 +11,7 @@ export const login = async (email, password) => {
     email,
     password
   });
-  // 로그인 성공 시 로컬 스토리지에 저장
+
   return saveToLocalStorage(response.data.token, response.data.name);
 };
 

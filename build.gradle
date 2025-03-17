@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.ajou'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1-MorRue'
 
 java {
     toolchain {
@@ -38,12 +38,12 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
     //DB
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-
+    //lombok
     compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok' //TODO: test 도 추가해야된다네
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -52,7 +52,7 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-//test 생략
+
 tasks.withType(Test) {
     enabled = false
 }

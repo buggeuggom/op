@@ -2,7 +2,6 @@ package com.ajou.op.service;
 
 import com.ajou.op.domain.MonitoringAbnormality;
 import com.ajou.op.domain.user.User;
-import com.ajou.op.dto.MonitoringAbnormalityDto;
 import com.ajou.op.repositoty.monitoringAbnormality.MonitoringAbnormalityRepository;
 import com.ajou.op.request.MonitoringAbnormalityRequest;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +17,12 @@ public class MonitoringAbnormalityService {
 
     private final MonitoringAbnormalityRepository monitoringAbnormalityRepository;
 
-    public List<MonitoringAbnormalityDto> findAll() {
-
-        return monitoringAbnormalityRepository.findAll().stream()
-                .map(entity-> MonitoringAbnormalityDto.fromEntity(entity))
-                .toList();
-    }
+//    public List<MonitoringAbnormalityDto> findAll() {
+//
+//        return monitoringAbnormalityRepository.findAll().stream()
+//                .map(entity-> MonitoringAbnormalityDto.fromEntity(entity))
+//                .toList();
+//    }
 
     @Transactional
     public void save(MonitoringAbnormalityRequest request, User user) {

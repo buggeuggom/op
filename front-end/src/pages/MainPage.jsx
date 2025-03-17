@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/locale'; 
-import Navbar from '../components/Navbar';
 import AddWorkModal from '../components/AddWorkModal';
 import {
   getDailyWorks,
@@ -30,14 +29,13 @@ function MainPage() {
   const [editProjectValue, setEditProjectValue] = useState('');
   const navigate = useNavigate();
 
-  const getThisWeekDates = (baseDate) => {
+  const getThisWeekDates = (baseDate) => { //TODO: 리펙토링 필요(아주 많이) <= mac에선 잘돌아갔는데 안되서 GPT 쎈세가 변경함
     // baseDate를 한국 시간(UTC+9) 기준으로 변환
     const koreaDate = new Date(baseDate.getTime() + 9 * 60 * 60 * 1000);
-    koreaDate.setUTCHours(0, 0, 0, 0); // 시간을 00:00:00.000으로 설정
+    koreaDate.setUTCHours(0, 0, 0, 0);
     
-    const currentDay = koreaDate.getUTCDay(); // UTC 기준 요일 (일요일: 0, 월요일: 1, ..., 토요일: 6)
+    const currentDay = koreaDate.getUTCDay();
 
-    // 월요일을 기준으로 주 시작일 계산 (일요일이면 월요일로 보정)
     const monday = new Date(koreaDate);
     monday.setUTCDate(koreaDate.getUTCDate() - (currentDay === 0 ? 6 : currentDay - 1));
 
@@ -50,6 +48,7 @@ function MainPage() {
         dayOfWeek: ['월', '화', '수', '목', '금', '토'][i]
       });
     }
+
     return dates;
   };
 
@@ -59,7 +58,7 @@ function MainPage() {
       const data = await getDailyWorks(dates[0].date);
       setDailyData(data);
     } catch (err) {
-      console.error('Error fetching daily works:', err);
+      console.error('Error getDailyWorks:', err);
     } finally {
       setLoading(false);
     }
@@ -270,7 +269,7 @@ function MainPage() {
     }
   };
 
-  return (
+  return (   //TODO: 컴포넌트로 분리해야하지만 귀찮. 미래의 나야 미안해 뺨 씨게 한대 때리렴
     <>
       <div className="main-container">
         <div className="content">
@@ -492,6 +491,7 @@ function MainPage() {
           </table>
         </div>
       </div>
+
       <AddWorkModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}

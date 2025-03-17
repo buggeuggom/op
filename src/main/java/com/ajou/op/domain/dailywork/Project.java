@@ -31,7 +31,6 @@ public class Project  extends AuditingFields {
     @Column(nullable = false, updatable = false)
     private LocalDate startedAt;
 
-
     @Comment("종료일")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = false, updatable = false)

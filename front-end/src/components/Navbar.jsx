@@ -18,6 +18,7 @@ function Navbar() {
           <Link to="/" className="navbar-brand">
             Daily Work
           </Link>
+          {/*관리자여부 확인해서 나타내야 함*/}
           <Link to="/admin" className="nav-link">
             관리자
           </Link>

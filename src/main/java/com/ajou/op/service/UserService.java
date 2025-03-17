@@ -5,8 +5,6 @@ import com.ajou.op.domain.Part;
 import com.ajou.op.domain.user.User;
 import com.ajou.op.domain.user.UserRole;
 import com.ajou.op.dto.security.UserDetailsImpl;
-import com.ajou.op.dto.UserDto;
-import com.ajou.op.exception.ErrorCode;
 import com.ajou.op.exception.OpApplicationException;
 import com.ajou.op.repositoty.PartRepository;
 import com.ajou.op.repositoty.UserRepository;
@@ -20,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static com.ajou.op.exception.ErrorCode.*;
@@ -33,7 +32,7 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final PartRepository partRepository;
 
-    public UserDto signup(UserSignupRequest request) {
+    public void signup(UserSignupRequest request) {
 
         userRepository.findByEmail(request.getEmail()).ifPresent(it -> {
             throw new OpApplicationException(DUPLICATED_EMAIL);
@@ -50,7 +49,6 @@ public class UserService implements UserDetailsService {
                 .part(part)
                 .build();
 
-        return UserDto.from(userRepository.save(user));
     }
 
     @Override
@@ -64,18 +62,13 @@ public class UserService implements UserDetailsService {
 
     public List<UserResponse> findAllByUserRole(User user) {
 
-        if(user.getRole().equals(UserRole.ADMIN)) {
 
-            return userRepository.findAllByRoleNotOrderByName(UserRole.OP).stream()
-                    .map(en -> UserResponse.builder()
-                            .email(en.getEmail())
-                            .name(en.getName())
-                            .build())
-                    .toList();
-        }
+        List<User> userList = (user.getRole().equals(UserRole.ADMIN)) ? userRepository.findAllByRoleNot(UserRole.OP) : userRepository.findAllByRoleAndPart(UserRole.WORKER, user.getPart());
 
-        Part part = user.getPart();
-        return  userRepository.findAllByRoleAndPartOrderByName(UserRole.WORKER, part).stream()
+
+        return userList.stream()
+                .sorted(Comparator.comparing((User u) -> u.getPart().getId())
+                        .thenComparing(User::getName))
                 .map(en -> UserResponse.builder()
                         .email(en.getEmail())
                         .name(en.getName())
@@ -85,7 +78,7 @@ public class UserService implements UserDetailsService {
 
     public void findByEmailAndName(UserChangePasswordRequest request) {
 
-         var user = userRepository.findByEmailAndName(request.getEmail(), request.getName())
+        var user = userRepository.findByEmailAndName(request.getEmail(), request.getName())
                 .orElseThrow(() -> new OpApplicationException(USER_NOT_FOUND));
     }
 
