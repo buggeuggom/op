@@ -35,25 +35,23 @@
 }
 
 .week-nav-button {
-  padding: 0.5rem 1rem;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
+  height: 36px; /* 공통 높이 적용 */
+  padding: 0 16px;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  background-color: white;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.week-nav-button:hover {
-  background-color: #357abd;
+  font-size: 14px;
 }
 
 .current-week {
-  padding: 0.5rem 1rem;
-  background: none;
-  border: none;
-  font-size: 1rem;
+  height: 36px; /* 공통 높이 적용 */
+  padding: 0 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
   cursor: pointer;
+  font-size: 14px;
 }
 
 /* 추가하기 버튼 */

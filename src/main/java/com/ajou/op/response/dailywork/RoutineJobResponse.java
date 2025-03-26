@@ -14,5 +14,4 @@ public class RoutineJobResponse {
 
     private Long id;
     private String goals;
-    private Set<DayOfWeekBit> workingDays;
 }

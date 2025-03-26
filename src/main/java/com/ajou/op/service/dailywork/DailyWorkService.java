@@ -92,7 +92,6 @@ public class DailyWorkService {
                             .map(en -> RoutineJobResponse.builder()
                                     .id(en.getId())
                                     .goals(en.getGoals())
-                                    .workingDays(en.getWorkingDays()) // 요일 정보도 함께 전달
                                     .build())
                             .toList();
 

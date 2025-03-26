@@ -96,7 +96,7 @@ function AddWorkPage() {
             </div>
 
             <div className="button-group">
-              <button type="button" className="cancel-button" onClick={() => navigate('/')}>
+              <button type="button" className="submit-button" style={{backgroundColor:'gray'}} onClick={() => navigate('/')}>
                 취소
               </button>
               <button type="submit" className="submit-button">

@@ -1,0 +1,39 @@
+/* 공통 버튼 스타일 */
+.btn {
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9ecef; /* 기본 버튼 배경색 */
+  color: #495057; /* 기본 버튼 텍스트 색상 */
+}
+
+.btn:hover {
+  background-color: #dee2e6;
+}
+
+/* 기본 버튼 (파란색) */
+.btn-primary {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #357abd;
+}
+
+.btn-primary:active {
+  background-color: #2a5f96;
+}
+
+/* 작은 버튼 */
+.btn-sm {
+  height: 28px;
+  padding: 0 8px;
+  font-size: 12px;
+} 

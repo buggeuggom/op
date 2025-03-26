@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/locale'; 
-import Navbar from '../components/Navbar';
 import { getDailyWorkAdmin } from '../api/userApi';
 import { getUsers } from '../api/userApi';
 import '../styles/MainPage.css';
 import '../styles/AdminPage.css';
 import { useNavigate } from 'react-router-dom';
+import { getStoredAuth } from '../api/authApi';
 
 function AdminPage() {
   const [dailyData, setDailyData] = useState(null);
@@ -17,6 +17,7 @@ function AdminPage() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
   const navigate = useNavigate();
+  const auth = getStoredAuth();
 
   const getThisWeekDates = (baseDate) => {
     // baseDate를 한국 시간(UTC+9) 기준으로 변환
@@ -53,6 +54,46 @@ function AdminPage() {
     };
     fetchUsers();
   }, []);
+
+  const downloadUserDataAsJson = (userData, userName) => {
+    // JSON 데이터를 문자열로 변환
+    const jsonString = JSON.stringify(userData, null, 2);
+    
+    console.log(jsonString);
+    // Blob 객체 생성
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    
+    // 다운로드 링크 생성
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${userName}.json`; // 파일명 설정
+    
+    // 링크 클릭 시뮬레이션
+    document.body.appendChild(link);
+    link.click();
+    
+    // cleanup
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const handleDataFetch = async (email, name) => {
+    if (!email || !name) {
+      alert('사용자를 선택해주세요');
+      return;
+    }
+
+    try {
+      const response = await getDailyWorkAdmin(weekDates[0].date, email);
+      if (response) {
+        // 데이터를 JSON 파일로 다운로드
+        downloadUserDataAsJson(response, name);
+      }
+    } catch (error) {
+      console.error('데이터 가져오기 실패:', error);
+    }
+  };
 
   const fetchDailyWorks = async (dates, email) => {
     if (!email) return;
@@ -128,25 +169,35 @@ function AdminPage() {
                 다음 주
               </button>
             </div>
-            <div className="user-search">
-              <select 
-                value={selectedUser}
-                onChange={(e) => handleUserSelect(e.target.value)}
-                className="user-select"
-              >
-                <option value="">사용자 선택</option>
-                {users.map(user => (
-                  <option key={user.email} value={user.email}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
+            <div className="header-right">
+              <div className="user-search">
+                <select 
+                  value={selectedUser}
+                  onChange={(e) => handleUserSelect(e.target.value)}
+                  className="user-select"
+                >
+                  <option value="">사용자 선택</option>
+                  {users.map(user => (
+                    <option key={user.email} value={user.email}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {selectedUser && auth?.name === '조기영' && (
+                <button 
+                  onClick={() => handleDataFetch(selectedUser, users.find(u => u.email === selectedUser)?.name)}
+                  className="btn btn-primary btn-sm"
+                >
+                  JSON 다운로드
+                </button>
+              )}
             </div>
           </div>
           {selectedUser ? (
             <table className="daily-table">
               <colgroup>
-                <col style={{width: `${(100/6) * 0.33}%`}} /> {/* 첫 번째 열 너비 - 다른 열의 33% */}
+                <col style={{width: `${(100/6) * 0.33}%`}} /> 
                 <col span="6" /> {/* 나머지 6개 열 */}
               </colgroup>
               <thead>
