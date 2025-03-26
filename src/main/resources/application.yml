@@ -16,7 +16,7 @@ jwt:
     expired-time-ms: 61200000000
     secret-key: ajoumc-wjdqhcjwlxla-dhvlvkdlf-ghkddlsrbaksema
 server:
-  port: 8080
+  port: 80
 ---
 spring:
   config:
@@ -47,7 +47,7 @@ spring:
     password: ajoumc1234
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 #    properties:
 #      hibernate:
 #        format_sql: true
