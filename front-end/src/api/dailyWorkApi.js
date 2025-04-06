@@ -90,4 +90,20 @@ export const getDailyWorks = async (day) => {
     headers: getAuthHeader()
   });
   return response.data;
-}; 
+};
+
+export const getDailyWorkAdmin = async (day, email) => {
+  const response = await apiClient.get('/daily-works/admin', {
+    params: { day, email },
+    headers: getAuthHeader()
+  });
+  return response.data;
+};
+
+export const getDailyWorkJSONAdmin = async (day, email) => {
+  const response = await apiClient.get('/daily-works/admin/json', {
+    params: { day, email },
+    headers: getAuthHeader()
+  });
+  return response.data;
+};

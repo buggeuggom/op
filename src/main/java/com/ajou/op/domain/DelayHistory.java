@@ -1,6 +1,6 @@
-package com.ajou.op.domain.dailywork;
+package com.ajou.op.domain;
 
-import com.ajou.op.domain.AuditingFields;
+
 import com.ajou.op.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -16,26 +16,28 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class MonthlyGoal  extends AuditingFields {
+public class DelayHistory  extends AuditingFields{
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @ManyToOne
     private User user;
-    @Comment("목표달")
+    @Comment("딜레이 상황")
+    private String description;
+    @Comment("작성한 날")
     @Column(nullable = false, updatable = false)
-    private LocalDate workDay;
-    private String goals;
+    private LocalDate descriptedAt;
+
 
     @Builder
-    private MonthlyGoal(User user, LocalDate workDay, String goals) {
+    private DelayHistory(User user, String description, LocalDate descriptedAt) {
         this.user = user;
-        this.workDay = workDay;
-        this.goals = goals;
+        this.description = description;
+        this.descriptedAt = descriptedAt;
     }
 
-    public void changeGoals(String goals) {
-        this.goals = goals;
+    public void changeDescription(String description) {
+        this.description = description;
     }
 }

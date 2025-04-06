@@ -22,7 +22,6 @@ public class Part extends AuditingFields {
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include
     private Integer id;
-
     private String name;
 
     @Builder

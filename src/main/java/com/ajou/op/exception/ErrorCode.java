@@ -22,6 +22,7 @@ public enum ErrorCode {
     ROUTINE_JOB_NOT_FOUND(NOT_FOUND, "Routine Job not founded"),
     DAILY_WORK_NOT_FOUND(NOT_FOUND, "Daily Work not founded"),
     PART_NOT_FOUND(NOT_FOUND, "Part not founded"),
+    DELAY_NOT_FOUND(NOT_FOUND, "Delay not founded"),
 
     //409
    DUPLICATED_EMAIL(CONFLICT, "Duplicated Email"),

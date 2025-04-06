@@ -22,7 +22,7 @@ public class DailyWorkController {
     public List<DailyWorkFromResponse> getDailyWorkForm(@ModelAttribute DailyWorkGetRequest request, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
-        return dailyworkService.getDailyWorkForm(request.getDay(), user);
+        return dailyworkService.getDailyWorkForm(request.getDay(), user, 6);
     }
 
     @GetMapping("/admin")
@@ -31,6 +31,15 @@ public class DailyWorkController {
 
         return dailyworkService.getDailyWorkFormAdmin(request.getDay(), request.getEmail(), user);
     }
+
+    @GetMapping("/admin/json")
+    public List<DailyWorkFromResponse> getDailyWorkJSONFormAdmin(@ModelAttribute DailyWorkGetRequest request, Authentication authentication) {
+        User user = ClassUtils.getSafeUserBySafeCast(authentication);
+
+        return dailyworkService.getDailyWorkJSONFormAdmin(request.getDay(), request.getEmail(), user);
+    }
+
+
     @PostMapping("/daily-works")
     public void saveDailyWork(@RequestBody List<DailyWorkCreateRequest> requests, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);

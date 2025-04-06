@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/locale'; 
-import { getDailyWorkAdmin } from '../api/userApi';
+import {getDailyWorkJSONAdmin, getDailyWorkAdmin} from '../api/dailyWorkApi.js';
 import { getUsers } from '../api/userApi';
 import '../styles/MainPage.css';
 import '../styles/AdminPage.css';
@@ -85,7 +85,7 @@ function AdminPage() {
     }
 
     try {
-      const response = await getDailyWorkAdmin(weekDates[0].date, email);
+      const response = await getDailyWorkJSONAdmin(weekDates[0].date, email);
       if (response) {
         // 데이터를 JSON 파일로 다운로드
         downloadUserDataAsJson(response, name);

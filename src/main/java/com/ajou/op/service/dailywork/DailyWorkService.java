@@ -1,11 +1,13 @@
 package com.ajou.op.service.dailywork;
 
 
+import com.ajou.op.domain.DelayHistory;
 import com.ajou.op.domain.dailywork.DailyWork;
 import com.ajou.op.domain.user.User;
 import com.ajou.op.domain.user.UserRole;
 import com.ajou.op.exception.ErrorCode;
 import com.ajou.op.exception.OpApplicationException;
+import com.ajou.op.repositoty.DelayHistoryRepository;
 import com.ajou.op.repositoty.UserRepository;
 import com.ajou.op.repositoty.dailywork.DailyWorkRepository;
 import com.ajou.op.repositoty.dailywork.MonthlyGoalRepository;
@@ -13,6 +15,7 @@ import com.ajou.op.repositoty.dailywork.ProjectRepository;
 import com.ajou.op.repositoty.dailywork.RoutineJobRepository;
 import com.ajou.op.request.dailywork.DailyWorkCreateRequest;
 import com.ajou.op.response.dailywork.*;
+import com.ajou.op.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,33 +40,37 @@ public class DailyWorkService {
     private final RoutineJobRepository routineJobRepository;
     private final DailyWorkRepository dailyWorkRepository;
     private final UserRepository userRepository;
-
+    private final DelayHistoryRepository delayHistoryRepository;
 
 
     @Transactional(readOnly = true)
     public List<DailyWorkFromResponse> getDailyWorkFormAdmin(LocalDate day, String email, User user) {
         User writer = userRepository.findByEmail(email).orElseThrow(() -> new OpApplicationException(USER_NOT_FOUND));
-        if(!(user.getRole().equals(UserRole.ADMIN)||user.getRole().equals(UserRole.LEADER))) {
+        if (!(user.getRole().equals(UserRole.ADMIN) || user.getRole().equals(UserRole.LEADER))) {
             throw new OpApplicationException(INVALID_PERMISSION);
         }
 
-        return getDailyWorkForm(day, writer);
+        return getDailyWorkForm(day, writer, 6);
     }
 
     @Transactional(readOnly = true)
-    public List<DailyWorkFromResponse> getDailyWorkForm(LocalDate request, User user) {
+    public List<DailyWorkFromResponse> getDailyWorkJSONFormAdmin(LocalDate day, String email, User user) {
+        User writer = userRepository.findByEmail(email).orElseThrow(() -> new OpApplicationException(USER_NOT_FOUND));
+        if (!(user.getRole().equals(UserRole.ADMIN) || user.getRole().equals(UserRole.LEADER))) {
+            throw new OpApplicationException(INVALID_PERMISSION);
+        }
 
-        //척날 부터 토요일 까지를 가져온다.
-
-        // MonthlyGoal 첫날의 달이랑 끝날 까지의 데이티의 달 가져오기
-        //Project 시작 종료일
-        //시작일 이후에 시작하는 것 중에 종료일보다 작은것 + 종료일보다 작은 것 중에 시작일보다 큰것
-        //Daily work -> 첫 날 부터 끝날 까지 가져오기
+        LocalDate firstDayOfMonth = getFirstDayOfMonth(day);
+        return getDailyWorkForm(firstDayOfMonth, writer, 31);
+    }
 
 
+
+    @Transactional(readOnly = true)//TODO: 수정이 많이 필요(나중에 각각으로 나누고 가져오기만 하거나 각각 가져옴게 하기)
+    public List<DailyWorkFromResponse> getDailyWorkForm(LocalDate request, User user, int duration) {
 
         List<DailyWorkFromResponse> collected = Stream.iterate(0, i -> i + 1)
-                .limit(6)
+                .limit(duration)
                 .map(i -> {
                     LocalDate targetDate = request.plusDays(i);
 
@@ -74,7 +81,6 @@ public class DailyWorkService {
                                     .build())
                             .toList();
 
-                    // Projects 조회 (시작일과 종료일 사이에 targetDate가 있는 것들)
                     List<ProjectResponse> projects = projectRepository.findByUserAndStartedAtLessThanEqualAndEndedAtGreaterThanEqual(
                                     user,
                                     targetDate,
@@ -85,17 +91,23 @@ public class DailyWorkService {
                                     .build())
                             .toList();
 
-
-                    // RoutineJobs 조회 - 시작일/종료일과 요일 조건을 모두 만족하는 것들만 필터링
                     List<RoutineJobResponse> routineJobs = routineJobRepository.findByUserAndStartedAtLessThanEqualAndEndedAtGreaterThanEqual(user, targetDate, targetDate).stream()
-                            .filter(routineJob -> routineJob.isWorkingDay(targetDate)) // 해당 요일에 해당하는 루틴만 필터링
+                            .filter(routineJob -> routineJob.isWorkingDay(targetDate))
                             .map(en -> RoutineJobResponse.builder()
                                     .id(en.getId())
                                     .goals(en.getGoals())
                                     .build())
                             .toList();
 
-                    // DailyWorks 조회
+                    List<DelayHistoryResponse> delayHistories = delayHistoryRepository.findAllByUserAndDescriptedAt(
+                                    user,
+                                    targetDate
+                            ).stream().map(en -> DelayHistoryResponse.builder()
+                                    .id(en.getId())
+                                    .description(en.getDescription())
+                                    .build())
+                            .toList();
+
                     List<DailyWorkResponse> dailyWorks = dailyWorkRepository.findByUserAndWorkDay(
                                     user,
                                     targetDate)
@@ -111,6 +123,7 @@ public class DailyWorkService {
                             .monthlyGoals(monthlyGoals)
                             .projects(projects)
                             .routineJobs(routineJobs)
+                            .delayHistories(delayHistories)
                             .dailyWorks(dailyWorks)
                             .build();
                 })
@@ -137,7 +150,7 @@ public class DailyWorkService {
                 () -> new OpApplicationException(ErrorCode.MONTHLY_GOAL_NOT_FOUND)
         );
 
-        if(!entity.getUser().equals(user)){
+        if (!entity.getUser().equals(user)) {
             throw new OpApplicationException(INVALID_PERMISSION);
         }
 
@@ -151,7 +164,7 @@ public class DailyWorkService {
                 () -> new OpApplicationException(ErrorCode.MONTHLY_GOAL_NOT_FOUND)
         );
 
-        if(!entity.getUser().equals(user)){
+        if (!entity.getUser().equals(user)) {
             throw new OpApplicationException(INVALID_PERMISSION);
         }
 

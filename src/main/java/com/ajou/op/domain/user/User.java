@@ -22,17 +22,12 @@ public class User  extends AuditingFields {
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include
     private Integer id;
-
     @Column(unique = true)
     private String email;
-
     private String name;
-
     private String password;
-
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Part part;
 

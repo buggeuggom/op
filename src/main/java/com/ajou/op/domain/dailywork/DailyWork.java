@@ -23,14 +23,10 @@ public class DailyWork extends AuditingFields {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
     @ManyToOne
     private User user;
-
     @Comment("내용")
     String work;
-
-
     @Comment("한날")
     @Column(nullable = false, updatable = false)
     private LocalDate workDay;

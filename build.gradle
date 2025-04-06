@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.ajou'
-version = '0.0.1-MorRue'
+version = '0.1-MorRue'
 
 java {
     toolchain {
@@ -42,7 +42,9 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     //lombok
     compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok' //TODO: test 도 추가해야된다네
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

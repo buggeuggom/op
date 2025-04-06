@@ -20,9 +20,7 @@ public class Work extends AuditingFields {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
     private String memo;
-
     private String workerName;
 
     @Builder

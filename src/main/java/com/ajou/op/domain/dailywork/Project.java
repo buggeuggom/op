@@ -22,20 +22,16 @@ public class Project  extends AuditingFields {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
     @ManyToOne
     private User user;
-
     @Comment("시작일")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = false, updatable = false)
     private LocalDate startedAt;
-
     @Comment("종료일")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = false, updatable = false)
     private LocalDate endedAt;
-
     private String goals;
 
     @Builder

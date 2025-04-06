@@ -22,5 +22,7 @@ public class DailyWorkFromResponse {
 
     private List<RoutineJobResponse> routineJobs;
 
+    private List<DelayHistoryResponse> delayHistories;
+
     private List<DailyWorkResponse> dailyWorks;
 }
