@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -54,20 +55,22 @@ public class DailyWorkService {
     }
 
     @Transactional(readOnly = true)
-    public List<DailyWorkFromResponse> getDailyWorkJSONFormAdmin(LocalDate day, String email, User user) {
+    public List<DailyWorkFromResponse> getDailyWorkJSONFormAdmin(String email, User user) {
         User writer = userRepository.findByEmail(email).orElseThrow(() -> new OpApplicationException(USER_NOT_FOUND));
         if (!(user.getRole().equals(UserRole.ADMIN) || user.getRole().equals(UserRole.LEADER))) {
             throw new OpApplicationException(INVALID_PERMISSION);
         }
 
-        LocalDate firstDayOfMonth = getFirstDayOfMonth(day);
-        return getDailyWorkForm(firstDayOfMonth, writer, 31);
+        LocalDate startedDay = LocalDate.of(LocalDate.now().getYear(), 3, 1);
+        long between = ChronoUnit.DAYS.between(startedDay, LocalDate.now());
+
+        return getDailyWorkForm(startedDay, writer, between);
     }
 
 
 
     @Transactional(readOnly = true)//TODO: 수정이 많이 필요(나중에 각각으로 나누고 가져오기만 하거나 각각 가져옴게 하기)
-    public List<DailyWorkFromResponse> getDailyWorkForm(LocalDate request, User user, int duration) {
+    public List<DailyWorkFromResponse> getDailyWorkForm(LocalDate request, User user, long duration) {
 
         List<DailyWorkFromResponse> collected = Stream.iterate(0, i -> i + 1)
                 .limit(duration)

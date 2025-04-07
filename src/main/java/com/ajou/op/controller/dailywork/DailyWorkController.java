@@ -36,7 +36,7 @@ public class DailyWorkController {
     public List<DailyWorkFromResponse> getDailyWorkJSONFormAdmin(@ModelAttribute DailyWorkGetRequest request, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);
 
-        return dailyworkService.getDailyWorkJSONFormAdmin(request.getDay(), request.getEmail(), user);
+        return dailyworkService.getDailyWorkJSONFormAdmin(request.getEmail(), user);
     }
 
 
