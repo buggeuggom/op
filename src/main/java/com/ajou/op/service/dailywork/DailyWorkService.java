@@ -62,7 +62,7 @@ public class DailyWorkService {
         }
 
         LocalDate startedDay = LocalDate.of(LocalDate.now().getYear(), 3, 1);
-        long between = ChronoUnit.DAYS.between(startedDay, LocalDate.now());
+        long between = ChronoUnit.DAYS.between(startedDay, LocalDate.now()) + 1;
 
         return getDailyWorkForm(startedDay, writer, between);
     }
