@@ -67,7 +67,14 @@ public class DailyWorkService {
         return getDailyWorkForm(startedDay, writer, between);
     }
 
+    @Transactional(readOnly = true)
+    public List<DailyWorkFromResponse> getDailyWorkJSONForm(User user) {
 
+        LocalDate startedDay = LocalDate.of(LocalDate.now().getYear(), 3, 1);
+        long between = ChronoUnit.DAYS.between(startedDay, LocalDate.now()) + 1;
+
+        return getDailyWorkForm(startedDay, user, between);
+    }
 
     @Transactional(readOnly = true)//TODO: 수정이 많이 필요(나중에 각각으로 나누고 가져오기만 하거나 각각 가져옴게 하기)
     public List<DailyWorkFromResponse> getDailyWorkForm(LocalDate request, User user, long duration) {

@@ -25,6 +25,13 @@ public class DailyWorkController {
         return dailyworkService.getDailyWorkForm(request.getDay(), user, 6);
     }
 
+    @GetMapping("/my/json")
+    public List<DailyWorkFromResponse> getDailyWorkJSONForm(Authentication authentication) {
+        User user = ClassUtils.getSafeUserBySafeCast(authentication);
+
+        return dailyworkService.getDailyWorkJSONForm(user);
+    }
+
     @GetMapping("/admin")
     public List<DailyWorkFromResponse> getDailyWorkFormAdmin(@ModelAttribute DailyWorkGetRequest request, Authentication authentication) {
         User user = ClassUtils.getSafeUserBySafeCast(authentication);

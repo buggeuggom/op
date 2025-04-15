@@ -107,3 +107,10 @@ export const getDailyWorkJSONAdmin = async (day, email) => {
   });
   return response.data;
 };
+
+export const getDailyWorkJSON = async () => {
+  const response = await apiClient.get('/daily-works/my/json', {
+    headers: getAuthHeader()
+  });
+  return response.data;
+};
