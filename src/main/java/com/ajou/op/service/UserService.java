@@ -49,6 +49,8 @@ public class UserService implements UserDetailsService {
                 .part(part)
                 .build();
 
+        userRepository.save(user);
+
     }
 
     @Override
